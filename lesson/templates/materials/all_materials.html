@@ -9,6 +9,7 @@
         <p>
             {{ material.body|truncatewords:5|linebreaks }}
         </p>
+        <a href="{{ material.get_absolute_url }}">link</a>
         Author {{ material.author }}<br>
     {% endfor %}
 
