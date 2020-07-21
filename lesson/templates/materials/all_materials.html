@@ -12,5 +12,5 @@
         <a href="{{ material.get_absolute_url }}">link</a>
         Author {{ material.author }}<br>
     {% endfor %}
-
+    <a href="{% url 'lesson:create_form' %}"> Create new Material</a>
 {% endblock %}
