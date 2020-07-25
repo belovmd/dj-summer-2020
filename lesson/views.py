@@ -2,6 +2,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.core.mail import send_mail
 
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from . import models
@@ -10,13 +13,14 @@ from . import forms
 # Create your views here.
 
 
+@login_required
 def all_materials(request):
     materials = models.Material.objects.all()
     return render(request,
                   'materials/all_materials.html',
                   {"materials": materials})
 
-
+@login_required
 def material_details(requests, year, month, day, slug):
     material = get_object_or_404(models.Material,
                                  slug=slug,
@@ -82,3 +86,28 @@ def create_form(request):
     return render(request,
                   'materials/create.html',
                   {'form': material_form})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(
+                request,
+                username=cd['login'],
+                password=cd['password'],
+            )
+            if user is None:
+                return HttpResponse('BAD CREDS')
+            else:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Auth success')
+                else:
+                    return HttpResponse('user inactive')
+    else:
+        form = forms.LoginForm()
+    return render(request,
+                  'login.html',
+                  {'form': form})
