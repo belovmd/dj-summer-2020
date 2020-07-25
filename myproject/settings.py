@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'lesson.apps.LessonConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lesson.apps.LessonConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +121,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = 'logout/'
