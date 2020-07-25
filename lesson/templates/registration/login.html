@@ -13,4 +13,6 @@
         <input type="hidden" name="next" value="{{ next }}">
         <input type="submit" value="Login">
     </form>
+    <br>
+    <a href="{% url "lesson:password_reset" %}">forgot password?</a>
 {% endblock %}
