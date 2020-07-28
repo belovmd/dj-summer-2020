@@ -42,3 +42,14 @@ class Material(models.Model):
                              self.publish.month,
                              self.publish.day,
                              self.slug])
+
+
+class Comment(models.Model):
+    material = models.ForeignKey(Material,
+                                 on_delete=models.CASCADE,
+                                 related_name='comments')
+
+    name = models.CharField(max_length=80)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField()
