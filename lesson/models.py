@@ -7,7 +7,13 @@ from django.conf import settings
 # Create your models here.
 
 
+class TheoryManager(models.Manager):
+    def get_queryset(self):
+        return super(TheoryManager, self).get_queryset().filter(material_type='theory')
+
+
 class Material(models.Model):
+
 
     MATERIAL_TYPE = [
         ('theory', 'Theoretical material'),
@@ -33,6 +39,9 @@ class Material(models.Model):
         choices=MATERIAL_TYPE,
         default='theory',
     )
+    objects = models.Manager()
+    theory = TheoryManager()
+
 
     # def __str__(self):
     #     return self.title

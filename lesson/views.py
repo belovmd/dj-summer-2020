@@ -8,6 +8,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from . import models
 from . import forms
 
@@ -15,6 +18,13 @@ from . import forms
 
 TEMPLATE = ("{title} at {uri} \n\n {name} asks you to review it. "
             "Comment:\n\n {comment}")
+
+
+class MaterialListView(LoginRequiredMixin, ListView):
+    queryset = models.Material.objects.all()
+    context_object_name = 'materials'
+    template_name = 'materials/all_materials.html'
+
 
 @login_required
 def all_materials(request):
