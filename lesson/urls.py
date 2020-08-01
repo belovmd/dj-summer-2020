@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 from django.urls import reverse_lazy
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.contrib.auth import views as auth_views
 
 app_name = 'lesson'
@@ -30,4 +33,9 @@ urlpatterns = [
             success_url=reverse_lazy('lesson:password_reset_complete'),
     ), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('profile/', views.view_profile, name='profile'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
