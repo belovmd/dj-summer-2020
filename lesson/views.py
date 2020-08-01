@@ -13,6 +13,8 @@ from . import forms
 
 # Create your views here.
 
+TEMPLATE = ("{title} at {uri} \n\n {name} asks you to review it. "
+            "Comment:\n\n {comment}")
 
 @login_required
 def all_materials(request):
@@ -60,8 +62,7 @@ def share_material(request, material_id):
                 material.title,
             )
 
-            body = ("{title} at {uri} \n\n {name} asks you to review it."
-                    "Comment:\n\n {comment}").format(
+            body = TEMPLATE.format(
                 title=material.title,
                 uri=material_uri,
                 name=cd['name'],
