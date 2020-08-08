@@ -42,9 +42,8 @@ class Material(models.Model):
     objects = models.Manager()
     theory = TheoryManager()
 
-
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
     def get_absolute_url(self):
         return reverse('lesson:material_details',
@@ -73,3 +72,18 @@ class Profile(models.Model):
 
     def __str__(self):
         return "{username} profile".format(username=self.user.username)
+
+
+class Lesson(models.Model):
+    topic = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    materials = models.ManyToManyField(Material,
+                                       related_name='lessons')
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.topic
+
+    def get_absolute_url(self):
+        return reverse('lesson:lesson_details',
+                       args=[self.slug])

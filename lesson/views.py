@@ -176,3 +176,21 @@ def edit_profile(request):
                   'edit.html',
                   {'profile_form': profile_form,
                    'user_form': user_form})
+
+
+@login_required
+def all_lessons(request):
+    lessons = models.Lesson.objects.all()
+    return render(request,
+                  'lessons/list.html',
+                  {"lessons": lessons})
+
+
+@login_required
+def lesson_details(request, slug):
+    lesson = get_object_or_404(models.Lesson, slug=slug)
+    lessons = models.Lesson.objects.all()
+    return render(request,
+                  'lessons/detail.html',
+                  {'lesson': lesson,
+                   'lessons': lessons})

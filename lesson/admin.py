@@ -15,3 +15,7 @@ class MaterialAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
     ordering = ('material_type', 'publish')
 
+
+@admin.register(models.Lesson)
+class MaterialAdmin(admin.ModelAdmin):
+    pass
